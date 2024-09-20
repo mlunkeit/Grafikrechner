@@ -107,7 +107,7 @@ public class Dreieck
   */
   public void drehen(float alpha)
   {
-    Vector2 schwerpunkt = new Vector2(0,0);
+    Vector2 schwerpunkt = getSchwerpunkt();
     Vector2[] punkte = new Vector2[] {punktA, punktB, punktC};
     
     for(Vector2 punkt : punkte) {

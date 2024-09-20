@@ -41,12 +41,10 @@ public class Vector2
 	public void drehen(Vector2 drehpunkt, float winkel)
 	{
 	  double a = abstand(drehpunkt);
-	  double alpha = Math.toDegrees(Math.asin((y - drehpunkt.getY())/a));
+	  double alpha = Math.atan2(y - drehpunkt.getY(), x - drehpunkt.getX());
 	  
-		x = a * Math.cos(Math.toRadians(alpha - winkel)) + drehpunkt.getX();
-		y = a * Math.sin(Math.toRadians(alpha - winkel)) + drehpunkt.getY();
-		
-		//verschiebe(new Vector2(xVerschiebung, yVerschiebung));
+		x = a * Math.cos(alpha - Math.toRadians(winkel)) + drehpunkt.getX();
+		y = a * Math.sin(alpha - Math.toRadians(winkel)) + drehpunkt.getY();
 	}
 	
 	@Override
