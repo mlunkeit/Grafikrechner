@@ -65,10 +65,7 @@ public class DreieckPanel extends JSplitPane
         updateTable();
         getBottomComponent().repaint();
       }
-      catch(Exception e)
-      {
-        JOptionPane.showMessageDialog(this, "Fehler bei der Eingabe.", "Fehler", JOptionPane.ERROR_MESSAGE);
-      }
+      catch(Exception e) {}
     });
     
     streckenButton.addActionListener(ev -> {
@@ -81,11 +78,7 @@ public class DreieckPanel extends JSplitPane
         updateTable();
         getBottomComponent().repaint();
       }
-      catch(Exception e)
-      {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Fehler bei der Eingabe.", "Fehler", JOptionPane.ERROR_MESSAGE);
-      }
+      catch(Exception e) {}
     });
     
     drehenButton.addActionListener(ev -> {
@@ -98,11 +91,7 @@ public class DreieckPanel extends JSplitPane
         updateTable();
         getBottomComponent().repaint();
       }
-      catch(Exception e)
-      {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Fehler bei der Eingabe.", "Fehler", JOptionPane.ERROR_MESSAGE);
-      }
+      catch(Exception e) {}
     });
   }
   
