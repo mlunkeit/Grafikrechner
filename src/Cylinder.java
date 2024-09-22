@@ -91,13 +91,13 @@ public class Cylinder
     Vector2 midpoint = new Vector2(anchorPoint.getX(), anchorPoint.getZ());
     Vector2 point2D = new Vector2(vector.getX(), vector.getZ());
     
-    if(midpoint.abstand(point2D) > radius)
+    if(midpoint.distance(point2D) > radius)
       return OUTSIDE;
       
     if(vector.getY() == anchorPoint.getY() || vector.getY() == (anchorPoint.getY() + height))
       return SURFACE;
       
-    if(midpoint.abstand(point2D) == radius)
+    if(midpoint.distance(point2D) == radius)
       return SURFACE;
       
     return INSIDE;

@@ -3,19 +3,19 @@ import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Iterator;
 
-public class DreieckPanel extends JSplitPane
+public class TrianglePanel extends JSplitPane
 { 
   private LinkedHashMap<String, String> values = new LinkedHashMap<>(); 
 
-  private final Dreieck dreieck;
+  private final Triangle triangle;
   
   private final Sidebar sidebar;
 
-  public DreieckPanel(Dreieck dreieck)
+  public TrianglePanel(Triangle triangle)
   {
-    super(HORIZONTAL_SPLIT, new Sidebar((byte) 0x7, 9), new DreieckDisplay(dreieck));
+    super(HORIZONTAL_SPLIT, new Sidebar((byte) 0x7, 9), new TriangleDisplay(triangle));
     
-    this.dreieck = dreieck;
+    this.triangle = triangle;
     
     sidebar = (Sidebar) getTopComponent();
     
@@ -31,7 +31,7 @@ public class DreieckPanel extends JSplitPane
         try
         {
           Vector2 vector = Vector2.parseVector2(input);
-          dreieck.verschieben(vector);
+          triangle.move(vector);
           updateValues();
           updateTable();
           getBottomComponent().repaint();
@@ -45,7 +45,7 @@ public class DreieckPanel extends JSplitPane
         try
         {
           double faktor = Double.parseDouble(input);
-          dreieck.strecken(faktor);
+          triangle.stretch(faktor);
           updateValues();
           updateTable();
           getBottomComponent().repaint();
@@ -59,7 +59,7 @@ public class DreieckPanel extends JSplitPane
         try
         {
           float winkel = Float.parseFloat(input);
-          dreieck.drehen(winkel);
+          triangle.rotate(winkel);
           updateValues();
           updateTable();
           getBottomComponent().repaint();
@@ -71,15 +71,15 @@ public class DreieckPanel extends JSplitPane
   
   private void updateValues()
   {
-    values.put("Punkt A", dreieck.getPunktA().toString());
-    values.put("Punkt B", dreieck.getPunktB().toString());
-    values.put("Punkt C", dreieck.getPunktC().toString());
-    values.put("Seite A", Math.round(dreieck.getSeiteA()*100)/100.0 + "");
-    values.put("Seite B", Math.round(dreieck.getSeiteB()*100)/100.0 + "");
-    values.put("Seite C", Math.round(dreieck.getSeiteC()*100)/100.0 + "");
-    values.put("Alpha", Math.round(dreieck.getAlpha()*100)/100.0 + "°");
-    values.put("Beta", Math.round(dreieck.getBeta()*100)/100.0 + "°");
-    values.put("Gamma", Math.round(dreieck.getGamma()*100)/100.0 + "°");
+    values.put("Punkt A", triangle.getPointA().toString());
+    values.put("Punkt B", triangle.getPointB().toString());
+    values.put("Punkt C", triangle.getPointC().toString());
+    values.put("Seite A", Math.round(triangle.getSideA()*100)/100.0 + "");
+    values.put("Seite B", Math.round(triangle.getSideB()*100)/100.0 + "");
+    values.put("Seite C", Math.round(triangle.getSideC()*100)/100.0 + "");
+    values.put("Alpha", Math.round(triangle.getAlpha()*100)/100.0 + "°");
+    values.put("Beta", Math.round(triangle.getBeta()*100)/100.0 + "°");
+    values.put("Gamma", Math.round(triangle.getGamma()*100)/100.0 + "°");
   }
   
   private void updateTable()
@@ -95,15 +95,15 @@ public class DreieckPanel extends JSplitPane
     }
   }
   
-  private static class DreieckDisplay extends JComponent
+  private static class TriangleDisplay extends JComponent
   {
-    private final Dreieck dreieck;
+    private final Triangle triangle;
     
     private int scale = 20;
     
-    private DreieckDisplay(Dreieck dreieck)
+    private TriangleDisplay(Triangle triangle)
     {
-      this.dreieck = dreieck;
+      this.triangle = triangle;
     }
     
     private Point translateVector(Vector2 vector)
@@ -137,9 +137,9 @@ public class DreieckPanel extends JSplitPane
       
       g.setColor(new Color(0x339cff));
       
-      Point posA = translateVector(dreieck.getPunktA());
-      Point posB = translateVector(dreieck.getPunktB());
-      Point posC = translateVector(dreieck.getPunktC());
+      Point posA = translateVector(triangle.getPointA());
+      Point posB = translateVector(triangle.getPointB());
+      Point posC = translateVector(triangle.getPointC());
       
       g.fillPolygon(new int[] {(int) posA.getX(), (int) posB.getX(), (int) posC.getX()}, new int[] {(int) posA.getY(), (int) posB.getY(), (int) posC.getY()}, 3);
     }

@@ -100,9 +100,9 @@ public class GeometrieFenster extends JFrame
                 Vector2 punktB = Vector2.parseVector2(eingaben[1]);
                 Vector2 punktC = Vector2.parseVector2(eingaben[2]);
 
-                Dreieck dreieck = new Dreieck(punktA, punktB, punktC);
+                Triangle triangle = new Triangle(punktA, punktB, punktC);
                 dreiecke++;
-                tabbedPane.add("Dreieck " + dreiecke, new DreieckPanel(dreieck));
+                tabbedPane.add("Dreieck " + dreiecke, new TrianglePanel(triangle));
             }
             catch(Exception e)
             {
@@ -125,9 +125,9 @@ public class GeometrieFenster extends JFrame
                 double seiteB = Double.parseDouble(eingaben[1]);
                 double seiteC = Double.parseDouble(eingaben[2]);
 
-                Dreieck dreieck = new Dreieck(seiteA, seiteB, seiteC);
+                Triangle triangle = new Triangle(seiteA, seiteB, seiteC);
                 dreiecke++;
-                tabbedPane.add("Dreieck " + dreiecke, new DreieckPanel(dreieck));
+                tabbedPane.add("Dreieck " + dreiecke, new TrianglePanel(triangle));
             }
             catch(Exception e)
             {
@@ -150,9 +150,9 @@ public class GeometrieFenster extends JFrame
                 double seiteB = Double.parseDouble(eingaben[1]);
                 double seiteC = Double.parseDouble(eingaben[2]);
 
-                Dreieck dreieck = new Dreieck(alpha, seiteB, seiteC);
+                Triangle triangle = new Triangle(alpha, seiteB, seiteC);
                 dreiecke++;
-                tabbedPane.add("Dreieck " + dreiecke, new DreieckPanel(dreieck));
+                tabbedPane.add("Dreieck " + dreiecke, new TrianglePanel(triangle));
             }
             catch(Exception e)
             {
@@ -175,9 +175,9 @@ public class GeometrieFenster extends JFrame
                 float beta = Float.parseFloat(eingaben[1]);
                 double seiteC = Double.parseDouble(eingaben[2]);
 
-                Dreieck dreieck = new Dreieck(alpha, beta, seiteC);
+                Triangle triangle = new Triangle(alpha, beta, seiteC);
                 dreiecke++;
-                tabbedPane.add("Dreieck " + dreiecke, new DreieckPanel(dreieck));
+                tabbedPane.add("Dreieck " + dreiecke, new TrianglePanel(triangle));
             }
             catch(Exception e)
             {

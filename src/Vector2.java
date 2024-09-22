@@ -2,14 +2,14 @@ import java.lang.Math;
 
 public class Vector2
 {
-	private double x;
-	private double y;
+  private double x;
+  private double y;
 	
-	public Vector2(double x, double y)
-	{
-		this.x = x;
-		this.y = y;
-	}
+  public Vector2(double x, double y)
+  {
+    this.x = x;
+    this.y = y;
+  }
 	
 	public double getX()
 	{
@@ -21,13 +21,13 @@ public class Vector2
 		return y;
 	}
 	
-	public void verschieben(Vector2 vector)
+	public void move(Vector2 vector)
 	{
 		x += vector.getX();
 		y += vector.getY();
 	}
 	
-	public double abstand(Vector2 vector)
+	public double distance(Vector2 vector)
 	{
 		return Math.sqrt(Math.pow(vector.getX() - x, 2) + Math.pow(vector.getY() - y, 2));
 	}
@@ -38,13 +38,13 @@ public class Vector2
   * @param drehpunkt der Drehpunkt
   * @param winkel der Winkel in Gradmaß
   */
-	public void drehen(Vector2 drehpunkt, float winkel)
+	public void rotate(Vector2 rotationPoint, float winkel)
 	{
-	  double a = abstand(drehpunkt);
-	  double alpha = Math.atan2(y - drehpunkt.getY(), x - drehpunkt.getX());
+	  double a = distance(rotationPoint);
+	  double alpha = Math.atan2(y - rotationPoint.getY(), x - rotationPoint.getX());
 	  
-		x = a * Math.cos(alpha - Math.toRadians(winkel)) + drehpunkt.getX();
-		y = a * Math.sin(alpha - Math.toRadians(winkel)) + drehpunkt.getY();
+		x = a * Math.cos(alpha - Math.toRadians(winkel)) + rotationPoint.getX();
+		y = a * Math.sin(alpha - Math.toRadians(winkel)) + rotationPoint.getY();
 	}
 	
 	@Override
