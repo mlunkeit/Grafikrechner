@@ -4,94 +4,68 @@ import java.util.LinkedHashMap;
 import java.util.Iterator;
 
 public class DreieckPanel extends JSplitPane
-{
-  private JButton drehenButton = new JButton("Drehen");
-  private JButton verschiebenButton = new JButton("Verschieben");
-  private JButton streckenButton = new JButton("Strecken");
-  
+{ 
   private LinkedHashMap<String, String> values = new LinkedHashMap<>(); 
-  
-  private JPanel leftPanel;
-  private JTable table = new JTable(9, 2);
 
   private final Dreieck dreieck;
+  
+  private final Sidebar sidebar;
 
   public DreieckPanel(Dreieck dreieck)
   {
-    super(HORIZONTAL_SPLIT, new JPanel(), new DreieckDisplay(dreieck));
+    super(HORIZONTAL_SPLIT, new Sidebar((byte) 0x7, 9), new DreieckDisplay(dreieck));
     
-    this.dreieck = dreieck;    
-   
+    this.dreieck = dreieck;
+    
+    sidebar = (Sidebar) getTopComponent();
+    
     setDividerLocation(200);
-    
-    leftPanel = (JPanel) getTopComponent();
-    
-    getBottomComponent().setBackground(Color.PINK);
-    table.setEnabled(false);
-    
-    GroupLayout layout = new GroupLayout(leftPanel);
-    
-    layout.setAutoCreateGaps(true);
-    layout.setAutoCreateContainerGaps(true);
-    
-    layout.setHorizontalGroup(
-      layout.createParallelGroup()
-        .addComponent(drehenButton, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(verschiebenButton, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(streckenButton, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(table, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-    );
-    
-    layout.setVerticalGroup(
-      layout.createSequentialGroup()
-        .addComponent(drehenButton)
-        .addComponent(verschiebenButton)
-        .addComponent(streckenButton)
-        .addComponent(table)
-    );
-    
-    leftPanel.setLayout(layout);
     
     updateValues();
     updateTable();
     
-    verschiebenButton.addActionListener(ev -> {
-      String input = JOptionPane.showInputDialog(this, "Bitte geben Sie einen Vektor im Format (x, y) ein.", "Eingabe", JOptionPane.PLAIN_MESSAGE);
-      try
+    sidebar.onAction(actions -> {
+      if((actions.byteValue() & Sidebar.Action.MOVE) != 0)
       {
-        Vector2 vector = Vector2.parseVector2(input);
-        dreieck.verschieben(vector);
-        updateValues();
-        updateTable();
-        getBottomComponent().repaint();
+        String input = JOptionPane.showInputDialog(this, "Bitte geben Sie einen Vektor im Format (x, y) ein.", "Eingabe", JOptionPane.PLAIN_MESSAGE);
+        try
+        {
+          Vector2 vector = Vector2.parseVector2(input);
+          dreieck.verschieben(vector);
+          updateValues();
+          updateTable();
+          getBottomComponent().repaint();
+        }
+        catch(Exception e) {}
       }
-      catch(Exception e) {}
-    });
-    
-    streckenButton.addActionListener(ev -> {
-      String input = JOptionPane.showInputDialog(this, "Bitte geben Sie einen Streckungsfaktor ein.", "Eingabe", JOptionPane.PLAIN_MESSAGE);
-      try
+      
+      if((actions.byteValue() & Sidebar.Action.STRETCH) != 0)
       {
-        double faktor = Double.parseDouble(input);
-        dreieck.strecken(faktor);
-        updateValues();
-        updateTable();
-        getBottomComponent().repaint();
+        String input = JOptionPane.showInputDialog(this, "Bitte geben Sie einen Streckungsfaktor ein.", "Eingabe", JOptionPane.PLAIN_MESSAGE);
+        try
+        {
+          double faktor = Double.parseDouble(input);
+          dreieck.strecken(faktor);
+          updateValues();
+          updateTable();
+          getBottomComponent().repaint();
+        }
+        catch(Exception e) {}
       }
-      catch(Exception e) {}
-    });
-    
-    drehenButton.addActionListener(ev -> {
-      String input = JOptionPane.showInputDialog(this, "Bitte geben Sie einen Drehwinkel in Gradmaß ein.", "Eingabe", JOptionPane.PLAIN_MESSAGE);
-      try
+      
+      if((actions.byteValue() & Sidebar.Action.ROTATE) != 0)
       {
-        float winkel = Float.parseFloat(input);
-        dreieck.drehen(winkel);
-        updateValues();
-        updateTable();
-        getBottomComponent().repaint();
+        String input = JOptionPane.showInputDialog(this, "Bitte geben Sie einen Drehwinkel in Gradmaß ein.", "Eingabe", JOptionPane.PLAIN_MESSAGE);
+        try
+        {
+          float winkel = Float.parseFloat(input);
+          dreieck.drehen(winkel);
+          updateValues();
+          updateTable();
+          getBottomComponent().repaint();
+        }
+        catch(Exception e) {}
       }
-      catch(Exception e) {}
     });
   }
   
@@ -117,8 +91,7 @@ public class DreieckPanel extends JSplitPane
       String key = keyIterator.next();
       String value = values.get(key);
       
-      table.setValueAt(key, i, 0);
-      table.setValueAt(value, i, 1);
+      sidebar.setRow(new String[] {key, value}, i);
     }
   }
   
