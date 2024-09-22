@@ -102,6 +102,56 @@ public class GeometrieFenster extends JFrame
             }
         });
     }
+    else if(ev.getActionCommand().equals("SSW"))
+    {
+        eingabe.setInfo("Geben Sie die Seitenlängen und die Winkel des Dreiecks (in Gradmaß) ein.");
+
+        eingabe.setLabel1("Winkel Alpha");
+        eingabe.setLabel2("Seite B");
+        eingabe.setLabel3("Seite C");
+
+        eingabe.onSubmit(eingaben -> {
+            try
+            {
+                float alpha = Float.parseFloat(eingaben[0]);
+                double seiteB = Double.parseDouble(eingaben[1]);
+                double seiteC = Double.parseDouble(eingaben[2]);
+
+                Dreieck dreieck = new Dreieck(alpha, seiteB, seiteC);
+                dreiecke++;
+                tabbedPane.add("Dreieck " + dreiecke, new DreieckPanel(dreieck));
+            }
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(this, "Fehler: " + e.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
+    else if(ev.getActionCommand().equals("SWW"))
+    {
+        eingabe.setInfo("Geben Sie die Seitenlängen und die Winkel des Dreiecks (in Gradmaß) ein.");
+
+        eingabe.setLabel1("Winkel Alpha");
+        eingabe.setLabel2("Winkel Beta");
+        eingabe.setLabel3("Seite C");
+
+        eingabe.onSubmit(eingaben -> {
+            try
+            {
+                float alpha = Float.parseFloat(eingaben[0]);
+                float beta = Float.parseFloat(eingaben[1]);
+                double seiteC = Double.parseDouble(eingaben[2]);
+
+                Dreieck dreieck = new Dreieck(alpha, beta, seiteC);
+                dreiecke++;
+                tabbedPane.add("Dreieck " + dreiecke, new DreieckPanel(dreieck));
+            }
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(this, "Fehler: " + e.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    } else return;
 
     eingabe.display();
   }
