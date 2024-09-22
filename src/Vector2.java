@@ -51,15 +51,14 @@ public class Vector2
 	public String toString()
 	{
 	  return String.format("(%s, %s)", Math.round(x*100)/100.0, Math.round(y*100)/100.0);
-	  //return String.format("Vector2(%s,%s)", Math.round(x*10)/10, Math.round(y*10)/10);
 	}
 
-    public static Vector2 parseVector2(String value)
-    {
-        String[] values = value.replaceAll("[\\(\\) ]", "").split(",");
-        if(values.length != 2)
-            throw new IllegalArgumentException("Couldn't parse text to Vector2");
+  public static Vector2 parseVector2(String value)
+  {
+    String[] values = value.replaceAll("[\\(\\) ]", "").split(",");
+    if(values.length != 2)
+      throw new IllegalArgumentException("Couldn't parse text to Vector2");
 
-        return new Vector2(Double.parseDouble(values[0]), Double.parseDouble(values[1]));
-    }
+    return new Vector2(Double.parseDouble(values[0]), Double.parseDouble(values[1]));
+  }
 }

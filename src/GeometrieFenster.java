@@ -11,11 +11,13 @@ public class GeometrieFenster extends JFrame
   private final JMenuItem sswItem = new JMenuItem("von SSW");
   private final JMenuItem swwItem = new JMenuItem("von SWW");
   private final JMenuItem punkteItem = new JMenuItem("von den Eckpunkten");
-  private final JMenu zylinderMenu = new JMenu("Zylinder");
+  private final JMenuItem cylinderItem = new JMenuItem("Zylinder");
   
   private final JTabbedPane tabbedPane = new JTabbedPane();
   
   private int dreiecke = 0;
+  
+  private int cylinders = 0;
 
   public GeometrieFenster()
   {
@@ -37,7 +39,8 @@ public class GeometrieFenster extends JFrame
     punkteItem.setActionCommand("Punkte");
     punkteItem.addActionListener(this::neuesDreieck);
     neuMenu.add(dreieckMenu);
-    neuMenu.add(zylinderMenu);
+    cylinderItem.addActionListener(this::newCylinder);
+    neuMenu.add(cylinderItem);
     menuBar.add(neuMenu);
     setJMenuBar(menuBar);
     
@@ -45,6 +48,36 @@ public class GeometrieFenster extends JFrame
     
     setVisible(true);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
+  }
+
+  private void newCylinder(ActionEvent ev)
+  {
+      Eingabe eingabe = new Eingabe(this);
+    
+      eingabe.setInfo("Geben Sie den Ankerpunkt [im Format (x, y, z)], Radius und Höhe ein.");
+        
+      eingabe.setLabel1("Ankerpunkt");
+      eingabe.setLabel2("Radius");
+      eingabe.setLabel3("Höhe");
+        
+      eingabe.onSubmit(eingaben -> {
+          try
+          {
+              Vector3 anchorPoint = Vector3.parseVector3(eingaben[0]);
+              double radius = Double.parseDouble(eingaben[1]);
+              double height = Double.parseDouble(eingaben[2]);
+              
+              Cylinder cylinder = new Cylinder(anchorPoint, radius, height);
+              cylinders++;
+              tabbedPane.add("Zylinder " + cylinders, new CylinderPanel(cylinder));
+          }
+          catch(Exception e)
+          {
+              JOptionPane.showMessageDialog(this, "Fehler: " + e.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
+          }
+      });
+      
+      eingabe.display();
   }
 
   private void neuesDreieck(ActionEvent ev)
@@ -151,7 +184,8 @@ public class GeometrieFenster extends JFrame
                 JOptionPane.showMessageDialog(this, "Fehler: " + e.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             }
         });
-    } else return;
+    }
+    else return;
 
     eingabe.display();
   }
